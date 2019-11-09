@@ -3,6 +3,8 @@ from twilio.rest import Client
 import string
 import random
 from flask import Flask, request
+import os
+
 app = Flask("auth_server")
 number_auth = {}
 
@@ -17,8 +19,8 @@ def number_auth_generator(phone_number): ##creates number auth dictionary
 
 # Your Account Sid and Auth Token from twilio.com/console
 # DANGER! This is insecure. See http://twil.io/secure
-account_sid = 'ACe1e0694ec169b74011b6cd499f24b3ef'
-auth_token = 'd680a9e5d5dbfb1954a9f16e144c7bdc'
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
 
 client = Client(account_sid, auth_token)
 
