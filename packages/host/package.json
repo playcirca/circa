@@ -1,0 +1,17 @@
+{
+  "name": "@circa/host",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "ws": "^7.2.0"
+  },
+  "scripts": {
+    "dev": "yarn tsc -w"
+  },
+  "devDependencies": {
+    "@types/ws": "^6.0.3",
+    "typescript": "^3.7.2"
+  }
+}
