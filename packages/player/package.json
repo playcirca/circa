@@ -19,7 +19,8 @@
     "workbox-webpack-plugin": "^4.3.1"
   },
   "scripts": {
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server",
+    "dist": "NODE_ENV=production `npm bin`/webpack -p"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
