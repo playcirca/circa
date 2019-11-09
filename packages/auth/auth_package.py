@@ -7,6 +7,9 @@ import os
 
 app = Flask("auth_server")
 number_auth = {}
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+client = Client(account_sid, auth_token)
 
 def id_generator(size=6, chars=string.digits): ##creates 6 digit auth number
     return ''.join(random.choice(chars) for x in range(size))
@@ -16,13 +19,6 @@ def number_auth_generator(phone_number): ##creates number auth dictionary
         number_auth[phone_number] = id_generator()
     else:
         return
-
-# Your Account Sid and Auth Token from twilio.com/console
-# DANGER! This is insecure. See http://twil.io/secure
-account_sid = os.environ['TWILIO_ACCOUNT_SID']
-auth_token = os.environ['TWILIO_AUTH_TOKEN']
-
-client = Client(account_sid, auth_token)
 
 def auth_message(phone_number):
     message = client.messages \
