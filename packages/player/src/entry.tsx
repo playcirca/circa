@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Welcome} from "./components/Welcome";
+
+
 
 console.log('circa 0.1');
 console.log(`ENV: ${process.env.NODE_ENV}`);
 
 ReactDOM.render(
-  <div>
-    <h2>Welcome to</h2>
-    <h1>circa</h1>
-  </div>,
+  <Welcome />,
   document.querySelector('.app'),
 );
 
