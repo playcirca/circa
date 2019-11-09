@@ -28,6 +28,9 @@
     "baseUrl": ".",
     "outDir": "lib"
   },
+  "paths": {
+    "@circa/pipe/*": "../pipe/src"
+  },
   "exclude": ["dist", "build", "node_modules"],
   "include": [
     "./src/**/*"

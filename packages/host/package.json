@@ -4,14 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "backpack-core": "^0.8.4",
     "jsonwebtoken": "^8.5.1",
     "ws": "^7.2.0"
   },
   "scripts": {
-    "dev": "yarn tsc -w"
+    "dev": "backpack"
   },
   "devDependencies": {
     "@types/ws": "^6.0.3",
+    "ts-loader": "^6.2.1",
     "typescript": "^3.7.2"
   }
 }
