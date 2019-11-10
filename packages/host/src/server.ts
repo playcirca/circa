@@ -19,55 +19,46 @@
 
 
 // make it tick based.
+import {addMinutes} from 'date-fns';
 
 console.log(`[boop]`);
 
 import WebSocket from 'ws';
-import {ServerSent, ServerType} from "@circa/pipe/src/messages";
+import {createHost} from "./host";
+import {GameManifest} from "./types";
 
-interface Player {
-  authorised: boolean;
-  mobileNumber: string | null;
-  client: WebSocket
-}
-
-const users = new Set<Player>();
-
-
+const exampleManifest: GameManifest = {
+  name: 'Example Game!',
+  startTime: addMinutes(new Date(), 5).toISOString(),
+  "questions": [
+    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 2000,
+        "step": 0.5
+      },
+      "question": "How long is Brighton Pier?",
+      "answer": 733.5,
+      "unit": "m"
+    },
+    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 1000,
+        "step": 1
+      },
+      "question": "How tall is the i360?",
+      "answer": 130,
+      "unit": "m"
+    }
+  ]};
 
 const wss = new WebSocket.Server({
   port: 8009,
 });
 
-const broadcast = (message: ServerSent) => {
-  console.log(`[broadcast]`, message);
+const host = createHost(wss);
 
-  users.forEach((user) => {
-    user.client.send(JSON.stringify(message));
-  })
-};
-
-
-
-wss.on('connection', function connection(ws) {
-  users.add({
-    authorised: false,
-    mobileNumber: null,
-    client: ws,
-  });
-
-  console.log('new player connected!');
-
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-  });
-
-  ws.send(JSON.stringify({"type": "QUEUED", time: Date.now() + (60 * 60 * 5) }));
-});
-
-let tick = 1;
-
-setInterval(() => {
-  broadcast({ type: ServerType.Tick, count: tick++ });
-}, 1000);
-
+host.addGame(exampleManifest);

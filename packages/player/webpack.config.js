@@ -69,6 +69,9 @@ module.exports = {
     compress: true,
     port: 8008,
     historyApiFallback: true,
+    allowedHosts: [
+      '1755acf5.ngrok.io'
+    ],
     proxy: {
       '/graphql': {
         target: 'http://localhost:8000'

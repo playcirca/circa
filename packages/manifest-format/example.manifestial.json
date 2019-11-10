@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "questions": [
+    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 2000,
+        "step": 0.5
+      },
+      "question": "How long is Brighton Pier?",
+      "answer": 733.5,
+      "unit": "m"
+    },    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 1000,
+        "step": 1
+      },
+      "question": "How tall is the i360?",
+      "answer": 130,
+      "unit": "m"
+    }
+  ]
+}

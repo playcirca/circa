@@ -1,12 +1,14 @@
 import React from "react";
-import {Welcome} from "./Welcome";
 import {useCirca} from "../useCirca";
+import {NextUp} from "./NextUp";
 
 
 export const App = () => {
-  useCirca();
+  const [] = useCirca();
 
   return (
-    <Welcome />
+    <div>
+      <NextUp />
+    </div>
   )
 }
