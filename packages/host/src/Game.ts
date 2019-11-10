@@ -71,14 +71,12 @@ export class Game {
         return
       }
 
-      const score = Math.abs((finalAnswer - answerValue)/(this.currentQuestion as any).range.to);
+      const score = Math.abs((finalAnswer - answerValue)/(this.currentQuestion as any).answer);
       questionScore.push([player, score]);
       this.leaderboard.set(player, (this.leaderboard.get(player) || 0) + score);
     });
 
-    questionScore.sort((a, b) => a[1] - b[1]);
-
-    console.log(questionScore);
+    questionScore.sort((a, b) => b[1] - a[1]);
 
     questionScore.forEach(([player, score], index) => {
       player.user.send({ type: ServerType.QuestionFacts, fact: `You were ${(score * 100).toFixed(2)}% off!` })

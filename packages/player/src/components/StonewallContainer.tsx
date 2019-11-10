@@ -8,8 +8,8 @@ export const StonewallContainer: React.FC = ({ children }) => {
   const [state] = useCirca();
 
   return (
-    <div css={{ height: '100vh', width: '100vw', background: getColorForTick(state.serverTick), padding: '1rem', textAlign: 'center' }}>
-      <div css={{ fontSize: '20vh' }}>
+    <div css={{ boxSizing: 'border-box', height: '100vh', width: '100vw', background: getColorForTick(state.serverTick), padding: '1rem', textAlign: 'center' }}>
+      <div css={{ fontSize: '20vw' }}>
         <Logotype />
       </div>
 

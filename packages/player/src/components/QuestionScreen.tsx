@@ -22,7 +22,7 @@ export const QuestionScreen = () => {
             <div css={{ flex: 'auto' }}>
               <input type="range" css={{ width: '100%' }} step={state.current.question.range.step} max={state.current.question.range.to} min={0} onMouseUp={e => client.send(createClientRangeAnswer(e))} onChange={e => setValue(parseFloat(e.target.value))} />
             </div>
-            <div>2000</div>
+            <div>{state.current.question.range.to}</div>
           </div>
           <div>
             {currentValue}{state.current.question.unit}

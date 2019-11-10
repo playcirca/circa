@@ -70,7 +70,7 @@ module.exports = {
     port: 8008,
     historyApiFallback: true,
     allowedHosts: [
-      '1755acf5.ngrok.io'
+      'f7801b7d.ngrok.io'
     ],
     proxy: {
       '/graphql': {
