@@ -30,7 +30,7 @@ import {createHost} from "./host";
 import {GameManifest} from "./types";
 
 const exampleManifest: GameManifest = {
-  name: 'Example Game!',
+  name: 'Hack Sussex 2019 Demo Game',
   startTime: addMinutes(new Date(), 1).toISOString(),
   "questions": [
     {
@@ -73,7 +73,7 @@ const exampleManifest: GameManifest = {
       },
       "question": "How much money does Amazon CEO Jeff Bezos earn every second?",
       "answer": 2489,
-      "unit": "m"
+      "unit": "dollars"
     },
   ]};
 

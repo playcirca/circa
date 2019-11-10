@@ -30,9 +30,12 @@ export const QuestionScreen = () => {
         </React.Fragment>
       ) : null}
       {state.current?.state === ScreenState.QuestionClosed ? (
+        <React.Fragment>
+        <h2>{state.current.question.answer}{state.current.question.unit}</h2>
         <ul css={{ listStyle: 'none', margin: 0, padding: 0 }}>
           {state.facts.map(fact => <li css={{ fontSize: '1.2rem', padding: '0.8rem', background: 'rgba(255, 255, 255, 0.3)', marginBottom: '1.2rem', borderRadius: 6 }}>{fact}</li>)}
         </ul>
+        </React.Fragment>
       ) : null}
     </StonewallContainer>
   )

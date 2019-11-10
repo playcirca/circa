@@ -49,7 +49,7 @@ export class Game {
     this.players.forEach(player => {
       player.user.send({ type: ServerType.QuestionFacts, fact: 'Thanks for playing our demo!' });
       player.user.send({ type: ServerType.QuestionFacts, fact: '🐛 Bug Avoider Achievement Unlocked' });
-      player.user.send({ type: ServerType.QuestionFacts, fact: `Total points: ${Math.round(this.leaderboard.get(player) || 0)}` })
+      player.user.send({ type: ServerType.QuestionFacts, fact: `Total points: ${((this.leaderboard.get(player) || 0) * 10).toFixed(1)}` })
     });
     }
 
@@ -79,7 +79,7 @@ export class Game {
     questionScore.sort((a, b) => b[1] - a[1]);
 
     questionScore.forEach(([player, score], index) => {
-      player.user.send({ type: ServerType.QuestionFacts, fact: `You were ${(score * 100).toFixed(2)}% off!` })
+      player.user.send({ type: ServerType.QuestionFacts, fact: `You were ${(score * 10).toFixed(1)}% off!` })
       player.user.send({ type: ServerType.QuestionFacts, fact: `You ranked ${index + 1} for this question.` });
 
       player.user.send({ type: ServerType.QuestionFacts, fact: `Current points: ${this.leaderboard.get(player) || 0}` })

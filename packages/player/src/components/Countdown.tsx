@@ -7,10 +7,10 @@ export const Countdown: React.FC<{ to: string}> = ({ to }) => {
 
   return (
     <div>
-      {days ? <div><span>{days}</span><span>days</span></div> : null}
-      {hours ? <div><span>{hours}</span><span>hours</span></div> : null}
-      {minutes ? <div><span>{minutes}</span><span>minutes</span></div> : null}
-      {seconds ? <div><span>{seconds}</span><span>seconds</span></div> : null}
+      {days ? <div><span>{days}</span> <span>days</span></div> : null}
+      {hours ? <div><span>{hours}</span> <span>hours</span></div> : null}
+      {minutes ? <div><span>{minutes}</span> <span>minutes</span></div> : null}
+      {seconds ? <div><span>{seconds}</span> <span>seconds</span></div> : null}
     </div>
   );
 }

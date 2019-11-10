@@ -78,7 +78,7 @@ export const createHost = (wss: WebSocket.Server) => {
   });
 
   const checkForGameStart = () => {
-    if (isAfter(addSeconds(new Date(), 50), new Date(playlist[0].startTime))) {
+    if (isAfter(addSeconds(new Date(), 10), new Date(playlist[0].startTime))) {
       game = new Game(playlist.shift() as GameManifest, Array.from(users.values()));
     }
   };
