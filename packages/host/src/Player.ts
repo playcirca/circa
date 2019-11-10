@@ -1,7 +1,6 @@
-import {Answer, Question, User} from "./types";
+import { Answer, Question, User } from './types';
 
 export class Player {
-
   private questionAnswers = new Map<Question, Answer[]>();
   public user: User;
 
@@ -20,7 +19,6 @@ export class Player {
 
     console.log(this.questionAnswers);
   }
-
 
   getFinalAnswerForQuestion(question: Question) {
     const answers = this.questionAnswers.get(question);

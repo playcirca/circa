@@ -13,12 +13,12 @@
 // make it tick based.
 import WebSocket from 'ws';
 const wss = new WebSocket.Server({
-    port: 8009,
+  port: 8009,
 });
 wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-    });
-    ws.send('something');
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+  });
+  ws.send('something');
 });
 //# sourceMappingURL=server.js.map

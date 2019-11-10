@@ -1,17 +1,16 @@
-import WebSocket from "ws";
-import {GamePreview, ServerSent} from "../../pipe/src/messages";
+import WebSocket from 'ws';
+import { GamePreview, ServerSent } from '../../pipe/src/messages';
 
 export interface UserState {
   authorised: boolean;
   mobileNumber: string | null;
-  client: WebSocket
+  client: WebSocket;
 }
 
 export interface User {
   send(message: ServerSent): void;
   data: UserState;
 }
-
 
 export interface Question {
   type: string;
@@ -24,7 +23,7 @@ export interface RangeQuestionType extends Question {
     from: number;
     to: number;
     step: number;
-  }
+  };
   unit: string;
 }
 

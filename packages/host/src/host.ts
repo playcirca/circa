@@ -3,17 +3,17 @@ import {
   ClientType,
   GamePreview,
   ServerSent,
-  ServerType
-} from "../../pipe/src/messages";
-import WebSocket from "ws";
-import {GameManifest, User, UserState} from "./types";
-import {addSeconds, isAfter} from "date-fns";
-import {Game} from "./Game";
-import {createPlaylistMessage} from "./messages";
+  ServerType,
+} from '../../pipe/src/messages';
+import WebSocket from 'ws';
+import { GameManifest, User, UserState } from './types';
+import { addSeconds, isAfter } from 'date-fns';
+import { Game } from './Game';
+import { createPlaylistMessage } from './messages';
 
 export enum GameState {
   NoGame,
-  GameInPlay
+  GameInPlay,
 }
 
 export const createHost = (wss: WebSocket.Server) => {
@@ -30,7 +30,7 @@ export const createHost = (wss: WebSocket.Server) => {
 
     users.forEach((user) => {
       user.send(message);
-    })
+    });
   };
 
   const createUser = (client: WebSocket): User => {
@@ -46,7 +46,7 @@ export const createHost = (wss: WebSocket.Server) => {
 
     const user = {
       send,
-      data
+      data,
     };
 
     const ingress = (data: ClientSent) => {
@@ -57,7 +57,6 @@ export const createHost = (wss: WebSocket.Server) => {
       }
     };
 
-
     client.on('message', function incoming(message) {
       const data = JSON.parse(message.toString());
 
@@ -65,8 +64,6 @@ export const createHost = (wss: WebSocket.Server) => {
     });
 
     send(createPlaylistMessage(playlist));
-
-
 
     return user;
   };
@@ -79,7 +76,10 @@ export const createHost = (wss: WebSocket.Server) => {
 
   const checkForGameStart = () => {
     if (isAfter(addSeconds(new Date(), 10), new Date(playlist[0].startTime))) {
-      game = new Game(playlist.shift() as GameManifest, Array.from(users.values()));
+      game = new Game(
+        playlist.shift() as GameManifest,
+        Array.from(users.values()),
+      );
     }
   };
 
@@ -88,7 +88,6 @@ export const createHost = (wss: WebSocket.Server) => {
   setInterval(() => {
     broadcast({ type: ServerType.Tick, count: tick++ });
 
-
     if (game === null) {
       checkForGameStart();
     } else {
@@ -96,15 +95,17 @@ export const createHost = (wss: WebSocket.Server) => {
         game = null;
       }
     }
-
-    }, 1000);
-
+  }, 1000);
 
   return {
     addGame(game: GamePreview) {
       playlist.push(game);
-      playlist.sort((gameA, gameB) => new Date(gameA.startTime).getTime() - new Date(gameB.startTime).getTime());
+      playlist.sort(
+        (gameA, gameB) =>
+          new Date(gameA.startTime).getTime() -
+          new Date(gameB.startTime).getTime(),
+      );
       broadcast(createPlaylistMessage(playlist));
-    }
-  }
+    },
+  };
 };

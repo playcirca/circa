@@ -1,9 +1,9 @@
-import {QuestionType} from "@circa/host/src/types";
+import { QuestionType } from '@circa/host/src/types';
 
 export enum ClientType {
-  StartAuth= 'STARTAUTH',
+  StartAuth = 'STARTAUTH',
   ValidateCode = 'VALIDATECODE',
-  Answer = 'ANSWER'
+  Answer = 'ANSWER',
 }
 
 export enum ServerType {
@@ -43,7 +43,7 @@ export interface ClientValidateCode {
 
 export interface ServerGamePlaylist {
   type: ServerType.GamePlaylist;
-  playlist: GamePreview[]
+  playlist: GamePreview[];
 }
 
 export interface ServerSentValidation {
@@ -91,7 +91,7 @@ export interface ServerQuestionAnswer {
 
 export interface ServerQuestionFacts {
   type: ServerType.QuestionFacts;
-  fact: string
+  fact: string;
 }
 
 export interface ServerGameFinished {
@@ -100,8 +100,8 @@ export interface ServerGameFinished {
 
 export type ClientSent = ClientStartAuth | ClientValidateCode | ClientAnswer;
 
-
-export type ServerSent = ServerSentValidation
+export type ServerSent =
+  | ServerSentValidation
   | ServerAuthSuccessful
   | ServerGamePlaylist
   | ServerTick
@@ -112,4 +112,4 @@ export type ServerSent = ServerSentValidation
   | ServerQuestionFacts
   | ServerPreGameCountdown
   | ServerQuestionCountdown
-  | ServerGameFinished
+  | ServerGameFinished;
