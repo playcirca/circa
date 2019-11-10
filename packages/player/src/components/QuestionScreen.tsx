@@ -25,7 +25,7 @@ export const QuestionScreen = () => {
             <div>2000</div>
           </div>
           <div>
-            {currentValue}
+            {currentValue}{state.current.question.unit}
           </div>
         </React.Fragment>
       ) : null}

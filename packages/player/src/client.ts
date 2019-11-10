@@ -74,7 +74,7 @@ export interface State {
 type PState = ((draft: State) => void) | undefined;
 
 export function createClient(): Client {
-  const ws = new WebSocket('ws://localhost:8009');
+  const ws = new WebSocket('wss://838a0023.ngrok.io');
 
   const emitter = new NanoEvents<{
     change: null,

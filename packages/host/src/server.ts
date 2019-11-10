@@ -37,24 +37,44 @@ const exampleManifest: GameManifest = {
       "type": "range",
       "range": {
         "from": 0,
-        "to": 2000,
-        "step": 0.5
+        "to": 10000000,
+        "step": 2500
       },
-      "question": "How long is Brighton Pier?",
-      "answer": 733.5,
-      "unit": "m"
+      "question": "What is the volume of water in an Olympic swimming pool?",
+      "answer": 10000000,
+      "unit": "L"
     },
     {
       "type": "range",
       "range": {
         "from": 0,
-        "to": 1000,
+        "to": 5000,
+        "step": 5
+      },
+      "question": " How long is the Brighton Pier? ",
+      "answer": 525,
+      "unit": "m"
+    },    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 75,
+        "step": 0.1
+      },
+      "question": "Bopper the Whopper is Britain’s ‘fattest dog’ — how heavy is he?",
+      "answer": 49.9,
+      "unit": "kg"
+    },    {
+      "type": "range",
+      "range": {
+        "from": 0,
+        "to": 10000,
         "step": 1
       },
-      "question": "How tall is the i360?",
-      "answer": 130,
+      "question": "How much money does Amazon CEO Jeff Bezos earn every second?",
+      "answer": 2489,
       "unit": "m"
-    }
+    },
   ]};
 
 const wss = new WebSocket.Server({
