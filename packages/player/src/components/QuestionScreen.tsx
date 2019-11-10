@@ -14,12 +14,13 @@ export const QuestionScreen = () => {
         <h1>{state.current.question.question}</h1>
 
       ) : null}
+      {state.countdown ? <h1>{state.countdown}</h1> : null}
       {state.current?.state === ScreenState.QuestionOpen ? (
         <React.Fragment>
           <div css={{ display: 'flex' }}>
             <div>0</div>
             <div css={{ flex: 'auto' }}>
-              <input type="range" css={{ width: '100%' }} step={0.1} max={2000} min={0} onMouseUp={e => client.send(createClientRangeAnswer(e))} onChange={e => setValue(parseFloat(e.target.value))} />
+              <input type="range" css={{ width: '100%' }} step={state.current.question.range.step} max={state.current.question.range.to} min={0} onMouseUp={e => client.send(createClientRangeAnswer(e))} onChange={e => setValue(parseFloat(e.target.value))} />
             </div>
             <div>2000</div>
           </div>

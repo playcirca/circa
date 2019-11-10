@@ -26,8 +26,8 @@ function calculateFactsAndSend() {
   return { type: 'qfacts' }
 }
 
-function calcuateFinalAndSend() {
-  return { type: 'calc final and send' }
+function calculateFinalAndSend() {
+  return { type: 'final' }
 }
 
 export function *createTimingInstance(questions: QuestionType[]) {
@@ -36,13 +36,15 @@ export function *createTimingInstance(questions: QuestionType[]) {
     yield { type: 'nextquestion', question: question };
     yield consumeTicks(2);
     yield { type: 'questionopen'};
-    yield* sendForTicks(20, createQuestionCountdownMessage);
+    yield* sendForTicks(18, createQuestionCountdownMessage);
     yield { type: 'questionclosed'};
+    yield consumeTicks(1);
+    yield { type: 'setclosed'};
     yield calculateFactsAndSend();
     yield consumeTicks(6);
   }
 
-  yield calcuateFinalAndSend();
+  yield calculateFinalAndSend();
 }
 
 export function gameRunner(instance: Generator, gameInstance: Game) {
@@ -89,12 +91,19 @@ export function gameRunner(instance: Generator, gameInstance: Game) {
         }
 
         if (value.type === 'questionclosed') {
-          gameInstance.setAnswersAccepting(false);
           gameInstance.broadcast(createQuestionClosedMessage())
+        }
+
+        if (value.type === "setclosed") {
+          gameInstance.setAnswersAccepting(false);
         }
 
         if (value.type === 'qfacts') {
           gameInstance.broadcastFactsForQuestion()
+        }
+
+        if (value.type === 'final') {
+          gameInstance.final()
         }
 
         current = instance.next();

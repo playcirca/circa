@@ -11,12 +11,17 @@ export class Game {
   private players: Map<User, Player>;
   public currentQuestion: Question | null = null;
   public acceptingAnswers = false;
+  public leaderboard = new Map<Player, number>();
 
   constructor(manifest: GameManifest, users: User[]) {
     this.manifest = manifest;
     this.players = new Map<User, Player>();
 
-    users.forEach(user => this.players.set(user, new Player(user)));
+    users.forEach(user => {
+      const player = new Player(user);
+      this.players.set(user, player);
+      this.leaderboard.set(player, 0);
+    });
 
     gameRunner(createTimingInstance(this.manifest.questions), this);
   }
@@ -36,6 +41,18 @@ export class Game {
     this.acceptingAnswers = accepting;
   }
 
+  final() {
+    this.broadcast({
+      type: ServerType.GameFinished
+    });
+
+    this.players.forEach(player => {
+      player.user.send({ type: ServerType.QuestionFacts, fact: 'Thanks for playing our demo!' });
+      player.user.send({ type: ServerType.QuestionFacts, fact: '🐛 Bug Avoider Achievement Unlocked' });
+      player.user.send({ type: ServerType.QuestionFacts, fact: `Total points: ${Math.round(this.leaderboard.get(player) || 0)}` })
+    });
+    }
+
   broadcastFactsForQuestion() {
     if (this.currentQuestion === null) {
       return;
@@ -49,13 +66,14 @@ export class Game {
       const finalAnswer = player.getFinalAnswerForQuestion(this.currentQuestion as QuestionType);
 
       if (finalAnswer === null) {
-        questionScore.push([player, 0])
+        questionScore.push([player, 1000000]);
 
         return
       }
 
-
-      questionScore.push([player, Math.abs(finalAnswer - answerValue)/answerValue])
+      const score = Math.abs((finalAnswer - answerValue)/(this.currentQuestion as any).range.to);
+      questionScore.push([player, score]);
+      this.leaderboard.set(player, (this.leaderboard.get(player) || 0) + score);
     });
 
     questionScore.sort((a, b) => a[1] - b[1]);
@@ -64,7 +82,9 @@ export class Game {
 
     questionScore.forEach(([player, score], index) => {
       player.user.send({ type: ServerType.QuestionFacts, fact: `You were ${(score * 100).toFixed(2)}% off!` })
-      player.user.send({ type: ServerType.QuestionFacts, fact: `You ranked ${index + 1} for this question.` })
+      player.user.send({ type: ServerType.QuestionFacts, fact: `You ranked ${index + 1} for this question.` });
+
+      player.user.send({ type: ServerType.QuestionFacts, fact: `Current points: ${this.leaderboard.get(player) || 0}` })
     })
 
     // get final answer for each player

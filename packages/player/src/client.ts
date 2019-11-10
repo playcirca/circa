@@ -7,8 +7,8 @@ import {
   ServerSent,
   ServerType
 } from "../../pipe/src/messages";
-import {ClientQuestion} from "../../pipe/src/question";
 import NanoEvents from 'nanoevents'
+import {QuestionType} from "@circa/host/src/types";
 
 export interface Client {
   emitter: NanoEvents<{
@@ -26,6 +26,7 @@ export enum ScreenState {
   QuestionClosed,
   QuestionAnswer,
   EndGame,
+  Finished
 }
 
 interface GameQueuedState {
@@ -35,25 +36,30 @@ interface GameQueuedState {
 
 interface QuestionGivenState {
   state: ScreenState.QuestionGiven;
-  question: ClientQuestion;
+  question: QuestionType;
 }
 
 interface QuestionOpenState {
   state: ScreenState.QuestionOpen;
-  question: ClientQuestion;
+  question: QuestionType;
 }
 
 interface QuestionClosedState {
   state: ScreenState.QuestionClosed;
-  question: ClientQuestion;
+  question: QuestionType;
 }
 
 interface QuestionAnswerState {
   state: ScreenState.QuestionAnswer;
-  question: ClientQuestion;
+  question: QuestionType;
 }
 
-type CurrentState = GameQueuedState | QuestionGivenState | QuestionOpenState | QuestionClosedState | QuestionAnswerState;
+interface Finished {
+  state: ScreenState.QuestionAnswer;
+  question: QuestionType;
+}
+
+type CurrentState = GameQueuedState | QuestionGivenState | QuestionOpenState | QuestionClosedState | QuestionAnswerState | Finished;
 
 export interface State {
   loading: boolean;
@@ -62,6 +68,7 @@ export interface State {
   serverTick: number;
   playlists: GamePreview[];
   facts: string[]
+  countdown: number;
 }
 
 type PState = ((draft: State) => void) | undefined;
@@ -80,7 +87,8 @@ export function createClient(): Client {
     current: null,
     serverTick: 0,
     playlists: [],
-    facts: []
+    facts: [],
+    countdown: 0,
   };
 
 
@@ -113,12 +121,15 @@ export function createClient(): Client {
           return draft => {
             //@ts-ignore
             draft.current.state = ScreenState.QuestionOpen;
+
+            draft.countdown = 10;
           }
         }
         case ServerType.QuestionClosed: {
           return draft => {
             //@ts-ignore
             draft.current.state = ScreenState.QuestionClosed;
+            draft.countdown = 0;
           }
         }
         case ServerType.QuestionAnswer: {
@@ -127,14 +138,29 @@ export function createClient(): Client {
             draft.current.state = ScreenState.QuestionAnswer;
           }
         }
+        case ServerType.QuestionCountdown: {
+          return draft => {
+            draft.countdown = 10 - Math.round(data.current / 2) ;
+          }
+        }
+
         case ServerType.QuestionFacts: {
           return draft => {
             //@ts-ignore
             draft.facts.push(data.fact);
           }
         }
+        case ServerType.GameFinished: {
+          return draft => {
+            //@ts-ignore
+            draft.current = {
+              state: ScreenState.Finished
+            };
+            draft.facts = [];
+          }
+        }
       }
-    }
+    };
 
   ws.addEventListener('message', (e) => {
     const p = ingress(JSON.parse(e.data));

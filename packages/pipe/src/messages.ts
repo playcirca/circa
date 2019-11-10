@@ -1,4 +1,4 @@
-import {ClientQuestion} from "./question";
+import {QuestionType} from "@circa/host/src/types";
 
 export enum ClientType {
   StartAuth= 'STARTAUTH',
@@ -17,7 +17,8 @@ export enum ServerType {
   QuestionClosed = 'QuestionClosed',
   QuestionAnswer = 'QuestionAnswer',
   QuestionFacts = 'QuestionFacts',
-  QuestionCountdown = 'QuestionCountdown'
+  QuestionCountdown = 'QuestionCountdown',
+  GameFinished = 'GameFinished',
 }
 
 export interface GamePreview {
@@ -72,7 +73,7 @@ export interface ServerQuestionCountdown {
 
 export interface ServerQuestionGiven {
   type: ServerType.QuestionGiven;
-  question: ClientQuestion;
+  question: QuestionType;
 }
 
 export interface ServerQuestionOpen {
@@ -93,6 +94,10 @@ export interface ServerQuestionFacts {
   fact: string
 }
 
+export interface ServerGameFinished {
+  type: ServerType.GameFinished;
+}
+
 export type ClientSent = ClientStartAuth | ClientValidateCode | ClientAnswer;
 
 
@@ -107,3 +112,4 @@ export type ServerSent = ServerSentValidation
   | ServerQuestionFacts
   | ServerPreGameCountdown
   | ServerQuestionCountdown
+  | ServerGameFinished

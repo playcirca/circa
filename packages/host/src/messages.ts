@@ -4,7 +4,7 @@ import {
   ServerQuestionGiven, ServerQuestionOpen,
   ServerType
 } from "../../pipe/src/messages";
-import {Question} from "./types";
+import {QuestionType} from "./types";
 
 export function createPlaylistMessage(playlist: GamePreview[]): ServerGamePlaylist {
   return {
@@ -13,14 +13,10 @@ export function createPlaylistMessage(playlist: GamePreview[]): ServerGamePlayli
   }
 }
 
-export function createQuestionGivenMessage(question: Question): ServerQuestionGiven {
+export function createQuestionGivenMessage(question: QuestionType): ServerQuestionGiven {
   return {
     type: ServerType.QuestionGiven,
-    question: {
-      type: question.type,
-      question: question.question,
-      data: {}
-    },
+    question,
   }
 }
 
