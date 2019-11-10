@@ -15,7 +15,8 @@ export interface User {
 
 export interface Question {
   type: string;
-  question: string
+  question: string;
+  answer: number;
 }
 
 export interface RangeQuestionType extends Question {
@@ -24,15 +25,12 @@ export interface RangeQuestionType extends Question {
     to: number;
     step: number;
   }
-  answer: number;
   unit: string;
 }
 
 export type QuestionType = RangeQuestionType;
 
-export interface Answer {
-  value: any;
-}
+export type Answer = any;
 
 export interface GameManifest extends GamePreview {
   questions: QuestionType[];

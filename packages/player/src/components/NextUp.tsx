@@ -4,9 +4,9 @@ import {StonewallContainer} from "./StonewallContainer";
 import {Countdown} from "./Countdown";
 
 export const NextUp = () => {
-  const [client] = useCirca();
+  const [state] = useCirca();
 
-  const playlists = client.getState().playlists;
+  const playlists = state.playlists;
 
   return (
     <StonewallContainer>

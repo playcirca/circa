@@ -4,7 +4,7 @@ import {useCirca} from "../useCirca";
 
 
 export const Logotype = () => {
-  const [client] = useCirca();
+  const [state] = useCirca();
   return (
       <span css={{
       fontFamily: 'Comfortaa',
@@ -15,7 +15,7 @@ export const Logotype = () => {
       'WebkitTextFillColor': 'transparent',
       backgroundClip: 'text',
       'WebkitBackgroundClip': 'text',
-      backgroundImage: getColorForTick(client.getState().serverTick, 2)
+      backgroundImage: getColorForTick(state.serverTick, 2)
     }}>
       circa
       </span>

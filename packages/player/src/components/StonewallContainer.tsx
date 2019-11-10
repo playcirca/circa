@@ -5,10 +5,10 @@ import {useCirca} from "../useCirca";
 
 export const StonewallContainer: React.FC = ({ children }) => {
 
-  const [client] = useCirca();
+  const [state] = useCirca();
 
   return (
-    <div css={{ height: '100vh', width: '100vw', background: getColorForTick(client.getState().serverTick), padding: '1rem', textAlign: 'center' }}>
+    <div css={{ height: '100vh', width: '100vw', background: getColorForTick(state.serverTick), padding: '1rem', textAlign: 'center' }}>
       <div css={{ fontSize: '20vh' }}>
         <Logotype />
       </div>

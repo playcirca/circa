@@ -1006,6 +1006,11 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
+"@types/nanoevents@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/nanoevents/-/nanoevents-1.0.0.tgz#96844ed81742fd66153bd50c003057069605dd9d"
+  integrity sha512-58ZVTKTPAPNOHTFEJST1OlLGO1cVCphW9W+3iXm2MSW6lSByGSfT+4rE2dMJD10Vcp2sS3HZh8n5kZfmrBjhMw==
+
 "@types/node@*":
   version "12.12.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.7.tgz#01e4ea724d9e3bd50d90c11fd5980ba317d8fa11"
@@ -4517,6 +4522,11 @@ nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
+
+nanoevents@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-2.0.0.tgz#5a6051ebbcdfd67efe94cca0e4a03d616e1a4949"
+  integrity sha512-6wRUNwBA07fyeun/xqG1UzmKd3ucgzcxTyaWcqjsNL0PaXy4YAezyHPnMdsPYEsOl/9wyQ85j39rPYF0FNDozQ==
 
 nanomatch@^1.2.9:
   version "1.2.13"

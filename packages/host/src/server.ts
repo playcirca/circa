@@ -19,6 +19,8 @@
 
 
 // make it tick based.
+
+
 import {addMinutes} from 'date-fns';
 
 console.log(`[boop]`);
@@ -29,7 +31,7 @@ import {GameManifest} from "./types";
 
 const exampleManifest: GameManifest = {
   name: 'Example Game!',
-  startTime: addMinutes(new Date(), 5).toISOString(),
+  startTime: addMinutes(new Date(), 1).toISOString(),
   "questions": [
     {
       "type": "range",

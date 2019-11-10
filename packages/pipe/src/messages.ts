@@ -1,16 +1,23 @@
 import {ClientQuestion} from "./question";
 
 export enum ClientType {
-  StartAuth,
-  ValidateCode
+  StartAuth= 'STARTAUTH',
+  ValidateCode = 'VALIDATECODE',
+  Answer = 'ANSWER'
 }
 
 export enum ServerType {
-  SentValidation,
-  AuthSuccess,
-  GamePlaylist,
-  Tick,
-  QuestionGiven
+  SentValidation = 'SentValidation',
+  AuthSuccess = 'AuthSuccess',
+  GamePlaylist = 'GamePlaylist',
+  Tick = 'Tick',
+  PreGameCountdown = 'PreGameCountdown',
+  QuestionGiven = 'QuestionGiven',
+  QuestionOpen = 'QuestionOpen',
+  QuestionClosed = 'QuestionClosed',
+  QuestionAnswer = 'QuestionAnswer',
+  QuestionFacts = 'QuestionFacts',
+  QuestionCountdown = 'QuestionCountdown'
 }
 
 export interface GamePreview {
@@ -21,6 +28,11 @@ export interface GamePreview {
 export interface ClientStartAuth {
   type: ClientType.StartAuth;
   number: string;
+}
+
+export interface ClientAnswer {
+  type: ClientType.Answer;
+  data: any;
 }
 
 export interface ClientValidateCode {
@@ -47,12 +59,51 @@ export interface ServerTick {
   count: number;
 }
 
+export interface ServerPreGameCountdown {
+  type: ServerType.PreGameCountdown;
+  current: number;
+  count: number;
+}
+export interface ServerQuestionCountdown {
+  type: ServerType.QuestionCountdown;
+  current: number;
+  count: number;
+}
+
 export interface ServerQuestionGiven {
   type: ServerType.QuestionGiven;
   question: ClientQuestion;
 }
 
-export type ClientSent = ClientStartAuth | ClientValidateCode;
+export interface ServerQuestionOpen {
+  type: ServerType.QuestionOpen;
+}
+
+export interface ServerQuestionClosed {
+  type: ServerType.QuestionClosed;
+}
+
+export interface ServerQuestionAnswer {
+  type: ServerType.QuestionAnswer;
+  data: any;
+}
+
+export interface ServerQuestionFacts {
+  type: ServerType.QuestionFacts;
+  fact: string
+}
+
+export type ClientSent = ClientStartAuth | ClientValidateCode | ClientAnswer;
 
 
-export type ServerSent = ServerSentValidation | ServerAuthSuccessful | ServerGamePlaylist | ServerTick | ServerQuestionGiven;
+export type ServerSent = ServerSentValidation
+  | ServerAuthSuccessful
+  | ServerGamePlaylist
+  | ServerTick
+  | ServerQuestionGiven
+  | ServerQuestionOpen
+  | ServerQuestionClosed
+  | ServerQuestionAnswer
+  | ServerQuestionFacts
+  | ServerPreGameCountdown
+  | ServerQuestionCountdown

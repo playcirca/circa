@@ -1,7 +1,7 @@
 import {
   GamePreview,
-  ServerGamePlaylist,
-  ServerQuestionGiven,
+  ServerGamePlaylist, ServerPreGameCountdown, ServerQuestionClosed, ServerQuestionCountdown,
+  ServerQuestionGiven, ServerQuestionOpen,
   ServerType
 } from "../../pipe/src/messages";
 import {Question} from "./types";
@@ -18,8 +18,36 @@ export function createQuestionGivenMessage(question: Question): ServerQuestionGi
     type: ServerType.QuestionGiven,
     question: {
       type: question.type,
-      question: 'hello',
+      question: question.question,
       data: {}
     },
   }
 }
+
+export function createQuestionOpenMessage(): ServerQuestionOpen {
+  return {
+    type: ServerType.QuestionOpen,
+  }
+}
+
+export function createQuestionClosedMessage(): ServerQuestionClosed {
+  return {
+    type: ServerType.QuestionClosed,
+  }
+}
+
+export const createPregameCountdownMessage = (current: number, total: number): ServerPreGameCountdown => {
+  return {
+    type: ServerType.PreGameCountdown,
+    current,
+    count: total
+  }
+};
+
+export const createQuestionCountdownMessage = (current: number, total: number): ServerQuestionCountdown => {
+  return {
+    type: ServerType.QuestionCountdown,
+    current,
+    count: total
+  }
+};

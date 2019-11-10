@@ -1,12 +1,13 @@
 import {
   ClientSent,
+  ClientType,
   GamePreview,
   ServerSent,
   ServerType
 } from "../../pipe/src/messages";
 import WebSocket from "ws";
 import {GameManifest, User, UserState} from "./types";
-import {addMinutes, isAfter} from "date-fns";
+import {addSeconds, isAfter} from "date-fns";
 import {Game} from "./Game";
 import {createPlaylistMessage} from "./messages";
 
@@ -22,6 +23,7 @@ export const createHost = (wss: WebSocket.Server) => {
   const users = new Set<User>();
 
   const playlist: GamePreview[] = [];
+  let game: null | Game = null;
 
   const broadcast = (message: ServerSent) => {
     console.log(`[broadcast]`, message);
@@ -38,8 +40,21 @@ export const createHost = (wss: WebSocket.Server) => {
       client,
     };
 
-    const ingress = (_data: ClientSent) => {
+    const send = (message: ServerSent) => {
+      client.send(JSON.stringify(message));
+    };
 
+    const user = {
+      send,
+      data
+    };
+
+    const ingress = (data: ClientSent) => {
+      if (data.type === ClientType.Answer) {
+        if (game !== null) {
+          game.forwardAnswerForUser(user, data.data);
+        }
+      }
     };
 
 
@@ -49,16 +64,11 @@ export const createHost = (wss: WebSocket.Server) => {
       ingress(data);
     });
 
-    const send = (message: ServerSent) => {
-      client.send(JSON.stringify(message));
-    };
-
     send(createPlaylistMessage(playlist));
 
-    return {
-      send,
-      data
-    }
+
+
+    return user;
   };
 
   wss.on('connection', function connection(ws) {
@@ -66,10 +76,9 @@ export const createHost = (wss: WebSocket.Server) => {
 
     console.log('new player connected!');
   });
-  let game: null | Game = null;
 
   const checkForGameStart = () => {
-    if (isAfter(addMinutes(new Date(), 1), new Date(playlist[0].startTime))) {
+    if (isAfter(addSeconds(new Date(), 50), new Date(playlist[0].startTime))) {
       game = new Game(playlist.shift() as GameManifest, Array.from(users.values()));
     }
   };
@@ -83,8 +92,6 @@ export const createHost = (wss: WebSocket.Server) => {
     if (game === null) {
       checkForGameStart();
     } else {
-      game.tick();
-
       if (game.hasEnded) {
         game = null;
       }
